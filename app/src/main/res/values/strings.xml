@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">AutoCatToilet</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Auto Cat Toilet</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_health">Cat Health</string>
+    <string name="menu_waste">Waste Level</string>
+
+    <string name="home_second">Home Second</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="chart">Chart</string>
+    <string name="waste_level">Waste Level</string>
+    <string name="search">Search</string>
+    <string name="activate">Activate</string>
+    <string name="waste_message">Press when waste is being emptied</string>
+</resources>
