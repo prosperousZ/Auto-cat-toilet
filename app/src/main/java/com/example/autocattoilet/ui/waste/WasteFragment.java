@@ -1,4 +1,4 @@
-package com.example.autocattoilet.ui.slideshow;
+package com.example.autocattoilet.ui.waste;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

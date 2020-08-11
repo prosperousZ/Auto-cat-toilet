@@ -1,16 +1,16 @@
-package com.example.autocattoilet.ui.gallery;
+package com.example.autocattoilet.ui.waste;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HealthViewModel extends ViewModel {
+public class WasteViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HealthViewModel() {
+    public WasteViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("");
     }
 
     public LiveData<String> getText() {
