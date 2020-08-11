@@ -1,14 +1,22 @@
 package com.example.autocattoilet.ui.health;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.autocattoilet.R;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,14 +30,18 @@ import java.net.URL;
 public class HealthActivity extends AppCompatActivity {
 
     ListView listView;
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
 
+        
+
         listView = findViewById(R.id.activityLogs);
         downloadJSON("https://www.crowgotestact.com/test_service.php");
+
     }
 
     private void downloadJSON(final String urlWebService) {

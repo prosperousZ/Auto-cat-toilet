@@ -21,6 +21,7 @@
     <string name="activate">Activate</string>
     <string name="waste_message">Press when waste is being emptied</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="Weight">Weight</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
