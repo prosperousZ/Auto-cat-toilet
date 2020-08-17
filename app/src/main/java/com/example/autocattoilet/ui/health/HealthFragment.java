@@ -30,18 +30,27 @@ public class HealthFragment extends Fragment {
         galleryViewModel = ViewModelProviders.of(this).get(HealthViewModel.class);
         View root = inflater.inflate(R.layout.fragment_health, container, false);
 
+        Button button = (Button) root.findViewById(R.id.weight_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHealthActivity();
+            }
+        });
 
-//        Button yourButton = (Button) findViewById(R.id.weight_button);
 
-//        weight_button.setOnClickListener(new OnClickListener(){
-//            public void onClick(View v){
-//                startActivity(new Intent(getActivity(), HealthActivity.class));
-//            }
-//        });
+
 //        String[] values = new String[] {"Message1", "Message2", "Message3"};
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
 //        testList.setAdapter(adapter);
         return root;
+    }
+
+    public void openHealthActivity(){
+
+        Intent intent = new Intent(getActivity(), HealthActivity.class);
+        startActivity(intent);
+
     }
 
 }

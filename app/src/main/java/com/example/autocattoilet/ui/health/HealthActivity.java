@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.ActionBar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,12 +33,12 @@ public class HealthActivity extends AppCompatActivity {
     ListView listView;
     private AppBarConfiguration mAppBarConfiguration;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
-
-        
 
         listView = findViewById(R.id.activityLogs);
         downloadJSON("https://www.crowgotestact.com/test_service.php");
