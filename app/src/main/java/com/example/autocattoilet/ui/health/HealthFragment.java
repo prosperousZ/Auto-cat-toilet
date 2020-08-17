@@ -1,10 +1,12 @@
 package com.example.autocattoilet.ui.health;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,12 +31,17 @@ public class HealthFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_health, container, false);
 
 
+//        Button yourButton = (Button) findViewById(R.id.weight_button);
 
+//        weight_button.setOnClickListener(new OnClickListener(){
+//            public void onClick(View v){
+//                startActivity(new Intent(getActivity(), HealthActivity.class));
+//            }
+//        });
 //        String[] values = new String[] {"Message1", "Message2", "Message3"};
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
 //        testList.setAdapter(adapter);
         return root;
     }
-
 
 }
