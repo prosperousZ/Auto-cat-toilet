@@ -33,16 +33,26 @@ public class HealthActivity extends AppCompatActivity {
     ListView listView;
     private AppBarConfiguration mAppBarConfiguration;
 
-
+   // ActionBar actionBar = getActionBar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listView = findViewById(R.id.activityLogs);
         downloadJSON("https://www.crowgotestact.com/test_service.php");
 
+    }
+
+    /*
+     This function will ensure the back button will navigate to the previous page.
+     */
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     private void downloadJSON(final String urlWebService) {
