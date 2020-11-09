@@ -5,10 +5,21 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.CartesianSeriesColumn;
+import com.anychart.anychart.DataEntry;
+import com.anychart.anychart.EnumsAnchor;
+import com.anychart.anychart.HoverMode;
+import com.anychart.anychart.Position;
+import com.anychart.anychart.TooltipPositionMode;
+import com.anychart.anychart.ValueDataEntry;
 import com.example.autocattoilet.R;
 
 import org.json.JSONArray;
@@ -30,12 +41,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HealthActivity extends AppCompatActivity {
 
-    ListView listView;
-    private AppBarConfiguration mAppBarConfiguration;
-    private float weightNum[];
+//    private AppBarConfiguration mAppBarConfiguration;
 
    // ActionBar actionBar = getActionBar();
 
@@ -45,18 +55,9 @@ public class HealthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_health);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView = findViewById(R.id.activityLogs);
+//        listView = findViewById(R.id.any_chart_view);
         downloadJSON("https://www.crowgotestact.com/test_service.php");
 
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        BarChart chart = (BarChart) findViewById(R.id.chart);
-//
-//        BarData data = new BarData(getXAxisValues(), getDataSet());
-//        chart.setData(data);
-//        chart.setDescription("My Chart");
-//        chart.animateXY(2000, 2000);
-//        chart.invalidate();
     }
 
     /*
@@ -81,8 +82,9 @@ public class HealthActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
                 try {
-                    loadIntoListView(s);
+                    loadIntoChart(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -108,69 +110,53 @@ public class HealthActivity extends AppCompatActivity {
         DownloadJSON getJSON = new DownloadJSON();
         getJSON.execute();
     }
-    private void loadIntoListView(String json) throws JSONException {
+    public void loadIntoChart(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        String[] databaseItems = new String[jsonArray.length()];
-        weightNum = new float[jsonArray.length()];
+        double[] weightNum = new double[jsonArray.length()];
+        String[] weightDate = new String[jsonArray.length()];
+
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            databaseItems[i] = obj.getString("weight") + " lbs | " + obj.getString("reading_time");
-            //weightNum[i] = Float.parseFloat(obj.getString("weight"));
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, databaseItems);
-        listView.setAdapter(arrayAdapter);
-    }
+            weightNum[i] = Double.parseDouble(obj.getString("weight"));
+            weightDate[i] = obj.getString("reading_time").substring(0, 10);
 
-//    private ArrayList getDataSet() {
-//        ArrayList dataSets = null;
-//
-//        ArrayList valueSet1 = new ArrayList();
-//        BarEntry v1e1 = new BarEntry(110.000f, 0); // Jan
-//        valueSet1.add(v1e1);
-//        BarEntry v1e2 = new BarEntry(40.000f, 1); // Feb
-//        valueSet1.add(v1e2);
-//        BarEntry v1e3 = new BarEntry(60.000f, 2); // Mar
-//        valueSet1.add(v1e3);
-//        BarEntry v1e4 = new BarEntry(30.000f, 3); // Apr
-//        valueSet1.add(v1e4);
-//        BarEntry v1e5 = new BarEntry(90.000f, 4); // May
-//        valueSet1.add(v1e5);
-//        BarEntry v1e6 = new BarEntry(100.000f, 5); // Jun
-//        valueSet1.add(v1e6);
-//
-//        ArrayList valueSet2 = new ArrayList();
-//        BarEntry v2e1 = new BarEntry(150.000f, 0); // Jan
-//        valueSet2.add(v2e1);
-//        BarEntry v2e2 = new BarEntry(90.000f, 1); // Feb
-//        valueSet2.add(v2e2);
-//        BarEntry v2e3 = new BarEntry(120.000f, 2); // Mar
-//        valueSet2.add(v2e3);
-//        BarEntry v2e4 = new BarEntry(60.000f, 3); // Apr
-//        valueSet2.add(v2e4);
-//        BarEntry v2e5 = new BarEntry(20.000f, 4); // May
-//        valueSet2.add(v2e5);
-//        BarEntry v2e6 = new BarEntry(80.000f, 5); // Jun
-//        valueSet2.add(v2e6);
-//
-//        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Brand 1");
-//        barDataSet1.setColor(Color.rgb(0, 155, 0));
-//        BarDataSet barDataSet2 = new BarDataSet(valueSet2, "Brand 2");
-//        barDataSet2.setColors(ColorTemplate.COLORFUL_COLORS);
-//
-//        dataSets = new ArrayList();
-//        dataSets.add(barDataSet1);
-//        dataSets.add(barDataSet2);
-//        return dataSets;
-//    }
-//
-//    private ArrayList getXAxisValues() {
-//        ArrayList xAxis = new ArrayList();
-//        xAxis.add("JAN");
-//        xAxis.add("FEB");
-//        xAxis.add("MAR");
-//        xAxis.add("APR");
-//        xAxis.add("MAY");
-//        xAxis.add("JUN");
-//        return xAxis;
-//    }
+        }
+        AnyChartView anyChartView = findViewById(R.id.any_chart_view);
+        Cartesian cartesian = AnyChart.column();
+
+        List<DataEntry> data = new ArrayList<>();
+        data.add(new ValueDataEntry(weightDate[0], weightNum[0]));
+        data.add(new ValueDataEntry(weightDate[1], weightNum[1]));
+//        data.add(new ValueDataEntry(weightDate[2], weightNum[2]));
+//        data.add(new ValueDataEntry(weightDate[3], weightNum[3]));
+//        data.add(new ValueDataEntry(weightDate[4], weightNum[4]));
+//        data.add(new ValueDataEntry(weightDate[5], weightNum[5]));
+//        data.add(new ValueDataEntry(weightDate[6], weightNum[6]));
+
+        CartesianSeriesColumn column = cartesian.column(data);
+
+        column.getTooltip()
+                .setTitleFormat("{%X}")
+                .setPosition(Position.CENTER_BOTTOM)
+                .setAnchor(EnumsAnchor.CENTER_BOTTOM)
+                .setOffsetX(0d)
+                .setOffsetY(5d)
+                .setFormat("{%Value}{groupsSeparator: } lbs");
+
+
+        cartesian.setAnimation(true);
+        cartesian.setTitle("Cat weight between: " + weightDate[0] + " - " + weightDate[6]);
+
+        cartesian.getYScale().setMinimum(0d);
+
+        cartesian.getYAxis((double) 0).getLabels().setFormat("{%Value}{groupsSeparator: } lbs");
+
+        cartesian.getTooltip().setPositionMode(TooltipPositionMode.POINT);
+        cartesian.getInteractivity().setHoverMode(HoverMode.BY_X);
+
+        cartesian.getXAxis((double) 0).setTitle("Date");
+        cartesian.getYAxis((double) 0).setTitle("Weight");
+
+        anyChartView.setChart(cartesian);
+    }
 }
