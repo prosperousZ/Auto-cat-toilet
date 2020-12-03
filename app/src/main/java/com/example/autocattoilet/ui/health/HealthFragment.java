@@ -38,11 +38,6 @@ public class HealthFragment extends Fragment {
             }
         });
 
-
-
-//        String[] values = new String[] {"Message1", "Message2", "Message3"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
-//        testList.setAdapter(adapter);
         return root;
     }
 
