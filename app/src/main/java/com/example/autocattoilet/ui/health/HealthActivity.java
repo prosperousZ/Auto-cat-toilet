@@ -1,14 +1,9 @@
 package com.example.autocattoilet.ui.health;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.Sampler;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
@@ -31,33 +26,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.graphics.Color;
-import android.os.Bundle;
-
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HealthActivity extends AppCompatActivity {
-
-//    private AppBarConfiguration mAppBarConfiguration;
-
-   // ActionBar actionBar = getActionBar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-//        listView = findViewById(R.id.any_chart_view);
-        downloadJSON("https://www.crowgotestact.com/test_service.php");
-
+        downloadJSON();
     }
 
     /*
@@ -69,7 +50,10 @@ public class HealthActivity extends AppCompatActivity {
         return true;
     }
 
-    private void downloadJSON(final String urlWebService) {
+    /*
+        This will download the json file from the webpage.
+     */
+    private void downloadJSON() {
 
         class DownloadJSON extends AsyncTask<Void, Void, String> {
 
@@ -81,7 +65,6 @@ public class HealthActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 try {
                     loadIntoChart(s);
@@ -93,7 +76,7 @@ public class HealthActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
                 try {
-                    URL url = new URL(urlWebService);
+                    URL url = new URL("https://www.crowgotestact.com/test_service.php");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -110,23 +93,62 @@ public class HealthActivity extends AppCompatActivity {
         DownloadJSON getJSON = new DownloadJSON();
         getJSON.execute();
     }
+
+    /*
+        This will load the json string into a column chart form.
+     */
     public void loadIntoChart(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
         double[] weightNum = new double[jsonArray.length()];
         String[] weightDate = new String[jsonArray.length()];
+        ArrayList<String> sameDate = new ArrayList<>();
+        double[] sameNum = new double[jsonArray.length()];
+        int sameDateCount = 0;
+        int sameDateIndex = 0;
+        List<DataEntry> data = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             weightNum[i] = Double.parseDouble(obj.getString("weight"));
-            weightDate[i] = obj.getString("reading_time").substring(0, 10);
+            weightDate[i] = obj.getString("reading_time").substring(5, 10);
+
+            if(weightNum[i] != 0.0)
+                data.add(new ValueDataEntry(weightDate[i], weightNum[i]));
+
+//            if(!sameDate.contains(weightDate[i]))
+//            {
+//                sameDate.add(weightDate[i]);
+//            }
 
         }
+//        double averageWeight = 0;
+//
+//        for(int i = 0; i < jsonArray.length(); i++)
+//        {
+//            if(sameDate.contains(weightDate[i]))
+//            {
+//                averageWeight += weightNum[i];
+//                sameDateCount++;
+//            }
+//            else
+//            {
+//
+//                sameDateCount = 0;
+//            }
+//        }
+
+//        weightNum[]
+
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         Cartesian cartesian = AnyChart.column();
 
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry(weightDate[0], weightNum[0]));
-        data.add(new ValueDataEntry(weightDate[1], weightNum[1]));
+//        List<DataEntry> data = new ArrayList<>();
+//        for(int i = 0; i < 20; i++)
+//        {
+//            data.add(new ValueDataEntry(weightDate[i], weightNum[i]));
+//        }
+        //data.add(new ValueDataEntry(weightDate[0], weightNum[0]));
+//        data.add(new ValueDataEntry(weightDate[1], weightNum[1]));
 //        data.add(new ValueDataEntry(weightDate[2], weightNum[2]));
 //        data.add(new ValueDataEntry(weightDate[3], weightNum[3]));
 //        data.add(new ValueDataEntry(weightDate[4], weightNum[4]));
@@ -145,7 +167,7 @@ public class HealthActivity extends AppCompatActivity {
 
 
         cartesian.setAnimation(true);
-        cartesian.setTitle("Cat weight between: " + weightDate[0] + " - " + weightDate[6]);
+        cartesian.setTitle("Cat weight between: " + weightDate[0] + " - " + weightDate[jsonArray.length() - 1]);
 
         cartesian.getYScale().setMinimum(0d);
 
@@ -158,5 +180,6 @@ public class HealthActivity extends AppCompatActivity {
         cartesian.getYAxis((double) 0).setTitle("Weight");
 
         anyChartView.setChart(cartesian);
+
     }
 }
