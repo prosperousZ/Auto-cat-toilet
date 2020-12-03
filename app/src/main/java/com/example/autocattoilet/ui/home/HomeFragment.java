@@ -1,6 +1,7 @@
 package com.example.autocattoilet.ui.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +28,20 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Button button = (Button) root.findViewById(R.id.activate_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //new HttpRequest().execute();
+
+                Uri webpage = Uri.parse("http://10.0.1.11/");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW,webpage);
+                startActivity(webIntent);
+            }
+        });
+
         return root;
     }
 
-    public void openHomeActivity(){
-
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
-
-    }
 }

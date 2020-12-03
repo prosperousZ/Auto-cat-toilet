@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.waste.WasteActivity"></activity>
-        <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.health.HealthActivity" />
         <activity
             android:name=".MainActivity"

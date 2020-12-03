@@ -137,23 +137,8 @@ public class HealthActivity extends AppCompatActivity {
 //            }
 //        }
 
-//        weightNum[]
-
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         Cartesian cartesian = AnyChart.column();
-
-//        List<DataEntry> data = new ArrayList<>();
-//        for(int i = 0; i < 20; i++)
-//        {
-//            data.add(new ValueDataEntry(weightDate[i], weightNum[i]));
-//        }
-        //data.add(new ValueDataEntry(weightDate[0], weightNum[0]));
-//        data.add(new ValueDataEntry(weightDate[1], weightNum[1]));
-//        data.add(new ValueDataEntry(weightDate[2], weightNum[2]));
-//        data.add(new ValueDataEntry(weightDate[3], weightNum[3]));
-//        data.add(new ValueDataEntry(weightDate[4], weightNum[4]));
-//        data.add(new ValueDataEntry(weightDate[5], weightNum[5]));
-//        data.add(new ValueDataEntry(weightDate[6], weightNum[6]));
 
         CartesianSeriesColumn column = cartesian.column(data);
 
@@ -165,9 +150,12 @@ public class HealthActivity extends AppCompatActivity {
                 .setOffsetY(5d)
                 .setFormat("{%Value}{groupsSeparator: } lbs");
 
+        JSONObject objFirst = jsonArray.getJSONObject(0);
+        JSONObject objLast = jsonArray.getJSONObject(jsonArray.length() - 1);
 
         cartesian.setAnimation(true);
-        cartesian.setTitle("Cat weight between: " + weightDate[0] + " - " + weightDate[jsonArray.length() - 1]);
+        cartesian.setTitle("Cat weight between: " + objFirst.getString("reading_time").substring(0, 10) + " - " +
+                            objLast.getString("reading_time").substring(0, 10) );
 
         cartesian.getYScale().setMinimum(0d);
 
