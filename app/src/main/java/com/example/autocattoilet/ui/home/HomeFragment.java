@@ -7,21 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.autocattoilet.R;
-import com.example.autocattoilet.ui.health.HealthActivity;
 
+/*
+    This class will create the home page fragment.
+ */
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
+    /*
+        This method will create a button that will link to the a webpage to turn on the motor.
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -32,8 +34,6 @@ public class HomeFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //new HttpRequest().execute();
 
                 Uri webpage = Uri.parse("http://10.0.1.11/");
                 Intent webIntent = new Intent(Intent.ACTION_VIEW,webpage);

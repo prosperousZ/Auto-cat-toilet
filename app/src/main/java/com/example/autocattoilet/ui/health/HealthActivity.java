@@ -30,8 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/*
+    This class will contain a column chart that displays the cat's weight overtime.
+ */
 public class HealthActivity extends AppCompatActivity {
 
+    /*
+        This method will begin to download the json file from the database.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +51,7 @@ public class HealthActivity extends AppCompatActivity {
      This function will ensure the back button will navigate to the previous page.
      */
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
@@ -55,13 +61,20 @@ public class HealthActivity extends AppCompatActivity {
      */
     private void downloadJSON() {
 
+        /*
+            This class will download a json file from the database.
+         */
         class DownloadJSON extends AsyncTask<Void, Void, String> {
+
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
 
+            /*
+                This method will execute when this activity is called.
+             */
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -73,6 +86,9 @@ public class HealthActivity extends AppCompatActivity {
                 }
             }
 
+            /*
+                This method will download the json file from the database containing the cat data in the background.
+             */
             @Override
             protected String doInBackground(Void... voids) {
                 try {
@@ -101,10 +117,6 @@ public class HealthActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray(json);
         double[] weightNum = new double[jsonArray.length()];
         String[] weightDate = new String[jsonArray.length()];
-        ArrayList<String> sameDate = new ArrayList<>();
-        double[] sameNum = new double[jsonArray.length()];
-        int sameDateCount = 0;
-        int sameDateIndex = 0;
         List<DataEntry> data = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -112,30 +124,10 @@ public class HealthActivity extends AppCompatActivity {
             weightNum[i] = Double.parseDouble(obj.getString("weight"));
             weightDate[i] = obj.getString("reading_time").substring(5, 10);
 
-            if(weightNum[i] != 0.0)
+            // Add the data to the list
+            if (weightNum[i] != 0.0)
                 data.add(new ValueDataEntry(weightDate[i], weightNum[i]));
-
-//            if(!sameDate.contains(weightDate[i]))
-//            {
-//                sameDate.add(weightDate[i]);
-//            }
-
         }
-//        double averageWeight = 0;
-//
-//        for(int i = 0; i < jsonArray.length(); i++)
-//        {
-//            if(sameDate.contains(weightDate[i]))
-//            {
-//                averageWeight += weightNum[i];
-//                sameDateCount++;
-//            }
-//            else
-//            {
-//
-//                sameDateCount = 0;
-//            }
-//        }
 
         AnyChartView anyChartView = findViewById(R.id.any_chart_view);
         Cartesian cartesian = AnyChart.column();
@@ -155,7 +147,7 @@ public class HealthActivity extends AppCompatActivity {
 
         cartesian.setAnimation(true);
         cartesian.setTitle("Cat weight between: " + objFirst.getString("reading_time").substring(0, 10) + " - " +
-                            objLast.getString("reading_time").substring(0, 10) );
+                objLast.getString("reading_time").substring(0, 10));
 
         cartesian.getYScale().setMinimum(0d);
 

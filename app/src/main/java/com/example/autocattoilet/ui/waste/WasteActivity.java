@@ -3,39 +3,29 @@ package com.example.autocattoilet.ui.waste;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.ekn.gruzer.gaugelibrary.HalfGauge;
 import com.ekn.gruzer.gaugelibrary.Range;
-import com.example.autocattoilet.MainActivity;
 import com.example.autocattoilet.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
+/*
+    This class will contain a gauge that will display the amount of cleaning cycles since last emptied.
+ */
 public class WasteActivity extends AppCompatActivity {
 
     public double cycleCount;
@@ -44,6 +34,10 @@ public class WasteActivity extends AppCompatActivity {
     public SharedPreferences sharedPref;
     public SharedPreferences.Editor editor;
 
+    /*
+        This method will create download the json file from the database and create a button
+        that will reset the cycles to zero.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +58,7 @@ public class WasteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // Reset the cycles to zero.
                 cycleCount = 0;
                 halfGauge.setValue(cycleCount);
                 editor.putString("cycle_count", "0");
@@ -73,6 +68,9 @@ public class WasteActivity extends AppCompatActivity {
         });
     }
 
+    /*
+        This method will create a back button.
+     */
     @Override
     public boolean onSupportNavigateUp(){
         finish();
@@ -91,6 +89,9 @@ public class WasteActivity extends AppCompatActivity {
                 super.onPreExecute();
             }
 
+            /*
+                This method will execute when this activity is called.
+             */
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -102,6 +103,9 @@ public class WasteActivity extends AppCompatActivity {
                 }
             }
 
+            /*
+                This method will download the json file containing the cat data in the background.
+             */
             @Override
             protected String doInBackground(Void... voids) {
                 try {
