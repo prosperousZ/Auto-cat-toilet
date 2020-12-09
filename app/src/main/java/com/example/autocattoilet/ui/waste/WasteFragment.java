@@ -1,53 +1,26 @@
 package com.example.autocattoilet.ui.waste;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
-
 import androidx.annotation.NonNull;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.example.autocattoilet.R;
-import com.example.autocattoilet.ui.health.HealthActivity;
-import com.example.autocattoilet.ui.health.HealthViewModel;
 
-import org.json.JSONException;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-
+/*
+    This class will create a fragment that will lead to the WasteActivity class through a button.
+ */
 public class WasteFragment extends Fragment
 {
-
     private WasteViewModel wasteViewModel;
 
+    /*
+        This method will create the button to the WasteActivity class.
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -65,6 +38,9 @@ public class WasteFragment extends Fragment
         return root;
     }
 
+    /*
+        This class will open the WasteActivity class.
+     */
     public void openWasteActivity(){
 
         Intent intent = new Intent(getActivity(), WasteActivity.class);

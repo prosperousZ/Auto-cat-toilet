@@ -5,25 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.example.autocattoilet.R;
 
+/*
+    This class will create a fragment that will lead to the HealthActivity class.
+ */
 public class HealthFragment extends Fragment {
 
     private HealthViewModel galleryViewModel;
-    ListView testList;
 
+    /*
+        This method will display text and create a button that leads to the HealthActivity class.
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -41,6 +38,9 @@ public class HealthFragment extends Fragment {
         return root;
     }
 
+    /*
+        This method will open the HealthActivity class.
+     */
     public void openHealthActivity(){
 
         Intent intent = new Intent(getActivity(), HealthActivity.class);
