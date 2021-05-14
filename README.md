@@ -1,6 +1,6 @@
 # Auto Cat Toilet
 
-An Android application that will control and communicate with the Auto Cat Toilet.
+An Android application that controls and communicates with the Auto Cat Toilet device.
 
 ![app1](https://user-images.githubusercontent.com/52123953/118220848-d71bf000-b439-11eb-9b18-a072696b4aae.png)
 ![app2](https://user-images.githubusercontent.com/52123953/118220857-dc793a80-b439-11eb-88b2-e21ce7b12acf.png)
